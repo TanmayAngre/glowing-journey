@@ -10,8 +10,9 @@ public class SlotHistoryFileWriter {
 	}
 	private static final String COMMA = ",";
     private static final String NEWLINE = "\n";
-    private static final String file = "E:\\didactic-fortnight\\ParkingSystem\\src\\slothistory.csv";
-	public static boolean writeFile(Ticket t, Slot s, Vehicle v){
+    private static final String file = "C:\\Users\\TANMAY\\Desktop\\glowing-journey\\ParkingSystem\\src\\slothistory.csv";
+	
+    public static boolean writeFile(Ticket t, Slot s, Vehicle v){
 		FileWriter fileWriter = null;
 		
 		try{

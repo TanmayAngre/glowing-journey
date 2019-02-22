@@ -9,7 +9,7 @@ public class TicketGenerator {
 		
 	}
 	
-	public Ticket generateTicket(int serviceTime){
+	public static Ticket generateTicket(int serviceTime){
 		Ticket t = new Ticket(serviceTime);
 		t.setEntryDate(LocalDate.now());
 		t.setEntryTime(LocalTime.now());

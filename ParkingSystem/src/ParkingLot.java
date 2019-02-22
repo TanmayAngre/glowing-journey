@@ -59,15 +59,5 @@ public class ParkingLot {
 		this.slotFilledList = slotFilled;
 	}
 
-	/*ParkingLot(String l, int f, int t){
-		location = l;
-		floors = f;
-		totalSlots = t;
-		slotAvailable = new ArrayList<Slot>(totalSlots);
-		slotAvailable.add(new Slot(1, 1));
-		slotAvailable.add(new Slot(1, 2));
-		slotAvailable.add(new Slot(1, 3));
-	}*/
-	
 }
 

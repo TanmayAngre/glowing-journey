@@ -15,6 +15,8 @@ public class SlotFileWriter {
 	public SlotFileWriter() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	//writing current state back to the file
 	public static boolean writeSlotFile(String file, ParkingLot pl){
 		FileWriter fileWriter = null;
 		//FileReader in = null;

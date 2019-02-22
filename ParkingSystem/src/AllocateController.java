@@ -7,9 +7,8 @@ public class AllocateController {
 		// TODO Auto-generated constructor stub
 		
 	}
-
-	public Slot getEmptySlot(ParkingLot pl, Vehicle v, Properties p){
-		//code for isAvailableSlot() for vehicle v...
+//find an empty slot if present
+	public static Slot getEmptySlot(ParkingLot pl, Vehicle v, Properties p){
 		System.out.println((v.getType()));
 		for(Slot slot:pl.getSlotAvailableList()){
 				if(slot.getSlotType() == Integer.parseInt(p.getProperty(v.getType())) && slot.isAvailable()){

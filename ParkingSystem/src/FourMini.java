@@ -19,7 +19,7 @@ public class FourMini extends Vehicle {
 
 	public void display(Properties p){
 		//Properties p = new Properties()
-		System.out.println("\n----------------------Displaying vehicle information---------------------");
+		System.out.println("\n----------------------Displaying Mini Four wheeler information---------------------");
 		System.out.println("Model : " + getModel());
 		System.out.println("Registration Plate Number: " + getPlateNo());
 		System.out.println("Type : " + getType());

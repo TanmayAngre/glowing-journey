@@ -10,6 +10,8 @@ public class SlotFileReader {
 	public SlotFileReader(){
 		// TODO Auto-generated constructor stub
 	}
+	
+	//initiating slots lists from file
 	public static List[] readFile(String file){
 		BufferedReader bufferedReader = null;
 		String s = null;
@@ -23,21 +25,22 @@ public class SlotFileReader {
             while((s = bufferedReader.readLine()) != null){
                 //Get all tokens available in line
                 String[] slotA = s.split(COMMA);
-                System.out.println("DEBUG: slotA length:" + slotA.length);
+                //System.out.println("DEBUG:"+slotA[3]);
                 Slot slot = new Slot(Integer.parseInt(slotA[1]),Integer.parseInt(slotA[2]),Integer.parseInt(slotA[0]));
                 
-                if(slotA[3].equals("TRUE")){
+                if(slotA[3].equalsIgnoreCase("TRUE")){
                 	slot.setIsAvailable(true);
                 	available.add(slot);
                 }
-                else if(slotA[3].equals("FALSE")){
+                else if(slotA[3].equalsIgnoreCase("FALSE")){
                 	slot.setIsAvailable(false);
                 	filled.add(slot);
                 }
             }
             a[0] = available;
             a[1] = filled;
-            System.out.println(a[1]);
+            System.out.println(available.size());
+            System.out.print(filled.size());
         } 
         catch(Exception e){
             System.out.println("In SlotFileReader Error");

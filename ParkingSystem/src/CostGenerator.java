@@ -7,7 +7,7 @@ public class CostGenerator {
 		// TODO Auto-generated constructor stub
 	}
 
-	public double generateCost(Ticket t, Slot s){
+	public static double generateCost(Ticket t, Slot s){
 		long days = ChronoUnit.DAYS.between(t.getEntryDate(), t.getExpiryDate());
 		long hours = ChronoUnit.HOURS.between(t.getEntryTime(), t.getExpiryTime());
 		if(hours < 0){

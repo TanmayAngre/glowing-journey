@@ -5,20 +5,13 @@ import java.io.*;
 //import org.apache.log4j.Logger;
 
 public class Main {
-	//static Logger log = Logger.getLogger(Main.class.getName());
-	
-	
-	
-
-	
-	
-	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
+		ParkingLot pl = null;
 		
 		/* --------------------Initialization Part----------------------- */
 		
@@ -40,13 +33,19 @@ public class Main {
 		finally{
 			
 		}
-		//add slotFilled parameter
-		ParkingLot pl = null;
+		
+		/* --------------Initiation from file------------- */
+			
+		//ArrayList<Slot> slotAvailableListFromFile = null;
+		//ArrayList<Slot> slotFilledListFromFile = null;
+		/*
+		List[] fileLists = SlotFileReader.readFile("C:\\Users\\TANMAY\\Desktop\\glowing-journey\\ParkingSystem\\src\\slot.csv");
+		slotAvailableList = (ArrayList<Slot>) fileLists[0];
+		slotFilledList = (ArrayList<Slot>) fileLists[1];
 		pl = new ParkingLot("Andheri", 3, 200, slotAvailableList, slotFilledList);
+		*/
 		
-		
-		//log.debug("Hello this is a debug message");
-        //log.info("Hello this is an info message");
+		pl = new ParkingLot("Andheri", 3, 200, slotAvailableList, slotFilledList);
 		
 		Properties p = new Properties();
 		InputStream input = null;
@@ -78,6 +77,7 @@ public class Main {
 		int option = sc.nextInt();
 		sc.nextLine();
 		if(option == 1){
+			/* ------------------create a Vehicle instance---------------------- */
 			System.out.print("\nEnter the details of your vehicle... ");
 			System.out.print("\nEnter the model name :");
 			//sc.next();
@@ -102,9 +102,7 @@ public class Main {
 				t = sc.next();
 			}while(!(t.equals("twowheeler") || t.equals("minifour") || t.equals("maxfour")));
 			
-			//check conditions for invalid inputs...(done)
-			
-			
+			//
 			Vehicle v = null;
 			if(t.equals("twowheeler")){
 				v = new TwoWheeler( m, pno, t);
@@ -115,71 +113,63 @@ public class Main {
 			if(t.equals("maxfour")){
 				v = new MaxFour( m, pno, t);
 			}
+			v.display(p);
 			
-			//Have to implement 2 more classes of vehicle...(Done)
-			
-			AllocateController ac = new AllocateController();
 			//System.out.println(v.getType());
-			Slot slot = ac.getEmptySlot(pl, v, p);
-			//if slots full, can check for other lot for empty slots(optional)
+			/* ---------------Finding empty slot ----------------------- */
+			Slot slot = AllocateController.getEmptySlot(pl, v, p);
 			if(slot == null){
 				System.out.println("\nParking Slot not available!!!");
 				sc.close();
 				return;
 			}
-			System.out.println(slot);
+			System.out.println("Slot allocated: " + slot);
 			System.out.println("Enter the service time (in hours) : ");
 			int serviceTime = sc.nextInt();
-			TicketGenerator tg = new TicketGenerator();
-			Ticket tic = tg.generateTicket(serviceTime);
-			CostGenerator cg = new CostGenerator();
-			double cost = cg.generateCost(tic, slot);
+			
+			/* ----------------Generate Ticket and Cost--------------------- */
+			Ticket tic = TicketGenerator.generateTicket(serviceTime);
+			double cost = CostGenerator.generateCost(tic, slot);
 			System.out.println(cost);
-			/*Ticket tic = new Ticket(serviceTime, slot);
-			tic.generateTicket();
-			double cost = tic.generateCost();
-			*/
 			try{
+				/* --------------------Database inserts--------------------- */
+				/* --------------------File writes-------------------- */
 				int u = jdbc.updateSlot(slot);
 				System.out.println("DEBUG: " + u + " results updated");
 				int x = jdbc.insertTicket(tic);
-				TicketFileWriter.writeFile(tic, "E:\\didactic-fortnight\\ParkingSystem\\src\\ticket.csv");
+				TicketFileWriter.writeFile(tic, "C:\\Users\\TANMAY\\Desktop\\glowing-journey\\ParkingSystem\\src\\ticket.csv");
 				System.out.println("DEBUG: " + x + " results inserted in tickets");
 				int y = jdbc.insertSlotHistory(tic, v, slot);
 				SlotHistoryFileWriter.writeFile(tic, slot, v);
 				System.out.println("DEBUG: " + y + " results inserted in slothistory");
 				int z = jdbc.insertTicketHistory(tic);
-				TicketHistoryFileWriter.writeFile(tic, "E:\\didactic-fortnight\\ParkingSystem\\src\\tickethistory.csv");
+				TicketHistoryFileWriter.writeFile(tic, "C:\\Users\\TANMAY\\Desktop\\glowing-journey\\ParkingSystem\\src\\tickethistory.csv");
 				System.out.println("DEBUG: " + z + " results inserted in tickethistory");
 			}
 			catch(Exception e){
 				System.out.println("Exception caught");
 				e.printStackTrace();
 			}
-			SlotFileWriter.writeSlotFile("E:\\didactic-fortnight\\ParkingSystem\\src\\slot.csv",pl);
 		}
 		else if(option == 2){
-			//generating a task to free slot after service time...
-			/*pl.addSlotAfter(tic, slot);*/
-			
 				System.out.println("Enter ticket number");
 				String number = sc.next();
-				//can do multithreading to deal with removing vehicle other than the latest one
-				
 				
 				try{
+					/* -----------------------Retrieve Ticket and Slot------------------- */
 					Ticket ticket = jdbc.retrieveTicket(number);
-					Slot sslot = jdbc.retrieveSlot(number);        //define this method in jdbccon
-					CostGenerator costG = new CostGenerator();
-					double newCost = costG.generateCost(ticket, sslot);
+					Slot sslot = jdbc.retrieveSlot(number);       
+					
+					/* ----------------------Generate new Cost ---------------------- */
+					double newCost = CostGenerator.generateCost(ticket, sslot);
 					System.out.println("New Cost is:"+newCost);
-					//jdbc.updateTicket(ticket);
 					jdbc.insertTicketHistory(ticket);
-					TicketHistoryFileWriter.writeFile(ticket, "E:\\didactic-fortnight\\ParkingSystem\\src\\tickethistory.csv");
-					RevokeController rc = new RevokeController();
-					Slot filled = rc.revokeFilledSlot(pl, sslot);
+					TicketHistoryFileWriter.writeFile(ticket, "C:\\Users\\TANMAY\\Desktop\\glowing-journey\\ParkingSystem\\src\\tickethistory.csv");
+					/* -----------------Revoking the filled slot----------- */
+					Slot filled = RevokeController.revokeFilledSlot(pl, sslot);
 					System.out.println("DEBUG:" + filled.isAvailable());
 					jdbc.updateSlot(sslot);
+					/* Delete ticket entry after exit... Ticket Entry persists in TicketHistory */
 					jdbc.deleteTicket(ticket);
 				}
 				catch(Exception e){
@@ -187,13 +177,14 @@ public class Main {
 				}
 					
 		}
-		
+		/* -------------Writing the state of slots back to file required for initialization---------------- */
 		System.out.println("Enter 3 to repeat the process...\n");
-		//System.out.println(     slot.isAvailable());
 		ch = sc.next();
+		SlotFileWriter.writeSlotFile("C:\\Users\\TANMAY\\Desktop\\glowing-journey\\ParkingSystem\\src\\slot.csv",pl);
+		
 		}while(ch.equals("3"));
 		sc.close();
+		
 	}
 
 }
-//remove objects, make methods static... add code for file initialize option...

@@ -12,6 +12,7 @@ public class TicketFileWriter {
 		// TODO Auto-generated constructor stub
 	}
 
+	//writing tickets back to file
 	public static boolean writeFile(Ticket s, String file){
 		FileWriter fileWriter = null;
 		

@@ -11,7 +11,7 @@ public class TicketHistoryFileWriter {
 	private static final String COMMA = ",";
     private static final String NEWLINE = "\n";
     
-
+    //writing tickethistory in respective file
 	public static boolean writeFile(Ticket s, String file){
 		FileWriter fileWriter = null;
 		

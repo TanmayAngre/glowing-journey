@@ -3,7 +3,7 @@ import java.util.Properties;
 
 public class TwoWheeler extends Vehicle {
 
-	private int wheels;
+	private int wheels = 2;
 
 	public TwoWheeler(String model, String pno, String type) {
 		super(model, pno, type);
@@ -19,7 +19,7 @@ public class TwoWheeler extends Vehicle {
 
 	public void display(Properties p){
 		//Properties p = new Properties()
-		System.out.println("\n----------------------Displaying vehicle information---------------------");
+		System.out.println("\n----------------------Displaying Two-Wheeler information---------------------");
 		System.out.println("Model : " + getModel());
 		System.out.println("Registration Plate Number: " + getPlateNo());
 		System.out.println("Type : " + getType());

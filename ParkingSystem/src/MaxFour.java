@@ -18,7 +18,7 @@ public class MaxFour extends Vehicle {
 
 	public void display(Properties p){
 		//Properties p = new Properties()
-		System.out.println("\n----------------------Displaying vehicle information---------------------");
+		System.out.println("\n----------------------Displaying MaxSize Four Wheeler information---------------------");
 		System.out.println("Model : " + getModel());
 		System.out.println("Registration Plate Number: " + getPlateNo());
 		System.out.println("Type : " + getType());
