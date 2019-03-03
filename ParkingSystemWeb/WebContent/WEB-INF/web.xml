@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>ParkingSystemWeb</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <listener>  
+  	<listener-class>ParkingLotListener</listener-class>  
+  </listener> 
+  <servlet>
+    <servlet-name>options</servlet-name>
+    <servlet-class>Options</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>options</servlet-name>
+    <url-pattern>/selectOption</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>slot</servlet-name>
+    <servlet-class>SlotServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>slot</servlet-name>
+    <url-pattern>/slotservlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ticket</servlet-name>
+    <servlet-class>TicketServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ticket</servlet-name>
+    <url-pattern>/ticketservlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>revoke</servlet-name>
+    <servlet-class>RevokeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>revoke</servlet-name>
+    <url-pattern>/revokeservlet</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
