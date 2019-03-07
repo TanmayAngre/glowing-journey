@@ -87,7 +87,7 @@ public class ParkingLotListener implements ServletContextListener{
 		e.setAttribute("pl", pl);
 		Properties p = new Properties();
 		InputStream input = null;
-		input = Main.class.getClassLoader().getResourceAsStream("slotconfig.properties");
+		input = ParkingLotListener.class.getClassLoader().getResourceAsStream("slotconfig.properties");
 		try{
 			p.load(input);
 			e.setAttribute("p",p);
