@@ -1,6 +1,7 @@
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,6 +36,7 @@ public class RevokeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int flag = 0;
 		try{
 			JDBCCon jdbc = JDBCCon.getInstanceJDBC();
 			Ticket ticket = jdbc.retrieveTicket(request.getParameter("ticketno"));
@@ -54,8 +56,17 @@ public class RevokeServlet extends HttpServlet {
 		}
 		catch(Exception e){
 			System.out.println(e);
+			flag = 1;
 		}
-		response.sendRedirect("index.jsp");
+		//response.setContentType("text/html");
+		//PrintWriter out = response.getWriter();
+		//out.print("<h3>Vehicle removed!!!</h3>");
+		if(flag == 0)
+			getServletContext().setAttribute("message", "Vehicle removed successfully!!");
+		else
+			getServletContext().setAttribute("message", "Ticket number entered is invalid!");
+		request.getRequestDispatcher("index.jsp").forward(request, response);
+		//response.sendRedirect("index.jsp");
 	}
 
 }

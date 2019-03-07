@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -13,16 +13,40 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+<script>
+function validdd(){
+	var model = document.forms["serviceform"]["service"];
+	if(model.value==""){
+		document.getElementById("e1").innerHTML = "Service time cannot be empty.";
+		model.focus();
+		return false;
+	}
+	if(!model.value.match(/^\d+$/)){
+    	document.getElementById("e1").innerHTML = "Allowed input is numerical in hours.";
+    	model.focus();
+    	return false;
+    }
+	document.getElementById("e1").innerHTML = "";
+	return true;
+}
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Open+Sans');
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+}
+</style>
 </head>
 <body>
 <div class="container">
 <h2 class="page-header text-info">After slot creation</h2>
 <div class="row">
-<form class="col-sm-offset-3 col-sm-6" action="ticketservlet" method="post">
+<form name="serviceform" class="col-sm-offset-3 col-sm-6" action="ticketservlet" method="post" onsubmit="return validdd()">
 	<div class="form-group">
 	<label>Enter the service time: (in hours)</label>
 	<input class="form-control" type="number" name="service">
+	<div id="e1"></div>
 	</div>
 	<br><br>
 	<input class="form-control btn btn-info" type="submit" value="Submit">

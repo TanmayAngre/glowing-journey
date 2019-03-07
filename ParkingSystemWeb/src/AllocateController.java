@@ -12,9 +12,7 @@ public class AllocateController {
 		System.out.println((v.getType()));
 		for(Slot slot:pl.getSlotAvailableList()){
 				if(slot.getSlotType() == Integer.parseInt(p.getProperty(v.getType())) && slot.isAvailable()){
-					pl.getSlotAvailableList().remove(slot);
-					pl.getSlotFilledList().add(slot);
-					slot.setIsAvailable(false);
+					
 					return slot;
 				}
 		}

@@ -13,11 +13,19 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Open+Sans');
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+}
+</style>
 </head>
 <body>
 <div class="container">
 <h2 class="page-header text-info">Vehicle Parking System</h2>
 <br>
+<center><h5><% String res = (String)getServletContext().getAttribute("message"); if(res==null){out.print("");} else{out.print(res);} %></h5></center>
 <center><h4>Select an option to park or unpark your vehicle...</h4></center>
 <br><br>
 <form action="selectOption">

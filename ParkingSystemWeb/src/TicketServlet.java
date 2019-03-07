@@ -1,7 +1,6 @@
 
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,13 +35,17 @@ public class TicketServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		/* ----------------Generate Ticket and Cost--------------------- */
-		Ticket tic = TicketGenerator.generateTicket(Integer.parseInt(request.getParameter("service")));
+		ParkingLot pl = (ParkingLot)getServletContext().getAttribute("pl");
 		Slot slot = (Slot)getServletContext().getAttribute("slot");
 		Vehicle v = (Vehicle)getServletContext().getAttribute("v");
+		pl.getSlotAvailableList().remove(slot);
+		pl.getSlotFilledList().add(slot);
+		slot.setIsAvailable(false);
+		Ticket tic = TicketGenerator.generateTicket(Integer.parseInt(request.getParameter("service")));
 		double cost = CostGenerator.generateCost(tic, slot);
 		getServletContext().setAttribute("cost",cost);
 		System.out.println(cost);
-		
+		int flag = 0;
 		// --------------------------- TODO add jdbc to servletcontext ------------------------
 		//JDBCCon jdbc = (JDBCCon)getServletContext().getAttribute("jdbc");
 		try{
@@ -64,8 +67,17 @@ public class TicketServlet extends HttpServlet {
 		catch(Exception e){
 			System.out.println("Exception caught");
 			e.printStackTrace();
+			flag = 1;
 		}
-		response.sendRedirect("index.jsp");
+		//response.setContentType("text/html");
+		//PrintWriter out = response.getWriter();
+		//out.print("<h3>Vehicle inserted!!!</h3>");
+		if(flag == 0)
+			getServletContext().setAttribute("message", "Vehicle parked successfully!!   Alloted Ticket Number : "+tic.getTicketNo());
+		else if(flag == 1)
+			getServletContext().setAttribute("message", "An internal error occured. Please try again.");
+		request.getRequestDispatcher("index.jsp").forward(request, response);
+		//response.sendRedirect("index.jsp");
 	}
 
 }
